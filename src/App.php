@@ -47,7 +47,25 @@ class App
             DatabaseConnection::UTF8_MB4
         ));
 
-        if ($path === '/next' && $this->isGetRequest()) {
+        if ($path === '/periods' && $this->isGetRequest()) {
+            $periods = $fetcher->query(
+                $fetcher->createQuery(
+                    'crash_period'
+                )->select(
+                    'period'
+                )
+            );
+
+            if (! $periods) {
+                http_response_code(404);
+                exit;
+            }
+
+            echo json_encode([
+                'periods' => array_map(fn ($period) => $period['period'], $periods)
+            ]);
+            exit;
+        } else if ($path === '/next' && $this->isGetRequest()) {
             $periods = $fetcher->query(
                 $fetcher->createQuery(
                     'crash_period'
