@@ -4,7 +4,7 @@ return [
     'token' => '',
     'db' => [
         'host' => '',
-        'database' => 'channel_storage',
+        'database' => 'turkish_traffic_accident',
         'username' => '',
         'password' => ''
     ]
