@@ -69,7 +69,7 @@ class App
             $this->isGetRequest()
             && $periodPeriod = $this->getStringAfterPathPrefix($path, '/period/')
         ) {
-            $periods = $fetcher->query(
+            $links = $fetcher->query(
                 $fetcher->createQuery(
                     'crash',
                     'c'
@@ -86,12 +86,14 @@ class App
                 ]
             );
 
-            if (! $periods) {
+            if (! $links) {
                 http_response_code(404);
                 exit;
             }
 
-            echo json_encode($periods[0]);
+            echo json_encode([
+                'crashes' => array_map(fn ($link) => $link['video_link'], $links)
+            ]);
             exit;
         }
 
